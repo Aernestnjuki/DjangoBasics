@@ -1,0 +1,1 @@
+alert('I am learning backend dev with django')

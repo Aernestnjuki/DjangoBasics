@@ -1,0 +1,26 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+header{
+    background-color: black;
+    padding: 20px;
+}
+.nav-link{
+    color: white;
+    margin-left: 20px;
+}
+a{
+    text-decoration: none;
+}
+h1{
+    margin: 20px;
+}
+.post{
+    padding: 20px;
+}
+.img{
+    width: 250px;
+}
