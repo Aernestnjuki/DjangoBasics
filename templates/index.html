@@ -7,7 +7,8 @@
 
     {% for post in posts%}
         <div class="post">
-            <h2>{{ post.name }} with id {{ post.id }} likes {{ post.hobby}}</h2>
+            <a href="{% url 'post-details' post_id=post.id %}" class="link"><h2>{{ post.id }} | {{ post.title }}</h2></a>
+            <p>{{ post.content }}</p>
         </div>
     {% endfor %}
     <img class="img" src="{% static 'images/board.png' %}" alt="Vision board">

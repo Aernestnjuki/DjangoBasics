@@ -1,33 +1,16 @@
-from lib2to3.fixes.fix_input import context
-
-from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpRequest
+from .forms import PostCreationForm
+from .models import Post
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-posts = [
-    {
-        'id': 1,
-        'name': 'Aernest',
-        'hobby': 'Programming'
-    },
-    {
-        'id': 2,
-        'name': 'Rahab',
-        'hobby': 'Networking'
-    },
-    {
-        'id': 3,
-        'name': 'Muthiga',
-        'hobby': 'Construction Management'
-    }
-]
 
 def index(request:HttpRequest):
-    name = request.GET.get('name') or 'World'
+    posts = Post.objects.all()
 
     context = {
-        'name': name,
         'posts': posts,
         'title': 'Home Page'
     }
@@ -46,16 +29,42 @@ def services(request:HttpRequest):
     }
     return render(request, 'services.html', context)
 
-def greet(request:HttpRequest):
-    name = request.GET.get('name') or 'World'
-    return HttpResponse(f'Hello {name}')
 
-def return_all_posts(request:HttpRequest):
+@login_required
+def create_post(request):
+    form = PostCreationForm()
 
-    return HttpResponse(str(posts))
+    if request.method == "POST":
+        form = PostCreationForm(request.POST, request.FILES)
 
-def return_one_post(request:HttpResponse, post_id):
-    for post in posts:
-        if post['id'] == post_id:
-            return HttpResponse(str(post))
-    return HttpResponse('post not found')
+        if form.is_valid():
+            form.save()
+        return redirect('posts-home')
+    context={
+        'form': form
+    }
+    return render(request, 'create_post.html', context)
+
+@login_required
+def post_details(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    context = {
+        'post': post
+    }
+    return render(request, 'post_detail.html', context)
+
+@login_required
+def update_post(request, post_id):
+    post_to_update = Post.objects.get(pk=post_id)
+
+    form = PostCreationForm(instance=post_to_update)
+
+    if request.method == "POST":
+        form = PostCreationForm(instance=post_to_update, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+        return redirect('posts-home')
+    context = {
+        'form': form
+    }
+    return render(request, 'update_post.html', context)
