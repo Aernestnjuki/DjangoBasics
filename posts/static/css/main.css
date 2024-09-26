@@ -7,6 +7,10 @@
 header{
     background-color: black;
     padding: 20px;
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
 }
 .nav-link{
     color: white;
@@ -18,11 +22,20 @@ a{
 h1{
     margin: 20px;
 }
+
+.container{
+    margin-top: 80px;
+}
+
+
+.content{
+    width: 60%;
+    margin: auto;
+    margin-top: 80px;
+}
+
 .post{
     padding: 20px;
-}
-.img{
-    width: 250px;
 }
 
 
@@ -72,4 +85,17 @@ form{
     background-color: red;
     color: white;
     text-align: center;
+}
+
+.pagination{
+    display:flex;
+    justify-content: space-between;
+    width: 60%;
+    margin-bottom: 10px;
+}
+
+.img{
+    width: 400px;
+    height: 200px;
+    margin-top: 5px;
 }
